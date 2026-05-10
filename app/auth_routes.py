@@ -1,0 +1,1 @@
+# Rutas públicas (login, registro, logout)

@@ -1,0 +1,1 @@
+# Rutas protegidas (dashboard, cursos, cambiar contraseña)

@@ -1,0 +1,1 @@
+# Configuración global (clave secreta, DB URI)

@@ -1,0 +1,1 @@
+# Formularios Flask-WTF (registro, login, curso, contraseña)

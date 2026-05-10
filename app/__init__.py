@@ -1,0 +1,1 @@
+# Inicializa Flask, SQLAlchemy y Blueprints
