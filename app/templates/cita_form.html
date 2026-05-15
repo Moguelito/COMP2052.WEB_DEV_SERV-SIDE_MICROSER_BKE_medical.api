@@ -1,0 +1,32 @@
+{% extends "layout.html" %} 
+{% block title %}{{ editar and "Editar Cita" or "Nueva Cita" }}{% endblock %} 
+{% block content %}
+
+<h2 class="mb-4">{{ editar and "Editar Cita" or "Nueva Cita" }}</h2>
+
+<form method="POST" novalidate>
+  {{ form.hidden_tag() }}
+
+  <!-- Fecha y Hora -->
+  <div class="mb-3">
+    {{ form.fecha.label(class="form-label") }}
+    {# Forzar input de texto simple con placeholder indicando el formato #}
+    {{ form.fecha(type="text", class="form-control", placeholder="YYYY-MM-DD HH:MM") }}
+    <div class="form-text">Formato esperado: <code>2026-06-01 09:30</code></div>
+  </div>
+
+  <!-- Motivo -->
+  <div class="mb-3">
+    {{ form.motivo.label(class="form-label") }}
+    {{ form.motivo(class="form-control", placeholder="Describe el motivo de la consulta") }}
+  </div>
+
+  <!-- Submit -->
+  <div class="mb-3">
+    {{ form.submit(class="btn btn-primary") }}
+    <a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary">Cancelar</a>
+  </div>
+
+</form>
+
+{% endblock %}

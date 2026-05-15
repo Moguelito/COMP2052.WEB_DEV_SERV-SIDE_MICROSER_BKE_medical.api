@@ -1,0 +1,27 @@
+{% extends "layout.html" %} 
+{% block title %}Home{% endblock %} 
+{% block content %}
+
+<div class="text-center">
+  <h1 class="mt-5"> Bienvenido al Sistema de Citas Médicas</h1>
+
+  {% if current_user.is_authenticated %}
+  <p class="lead text-muted">
+    Hola, <strong>{{ current_user.username }}</strong>. 
+    Selecciona Dashboard para ver tus citas.
+  </p>
+  <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary mt-3">
+    Ir al Dashboard
+  </a>
+
+  {% else %}
+  <p class="lead text-body-secondary">
+    Por favor inicia sesión o regístrate para continuar.
+  </p>
+  <a href="{{ url_for('auth.login') }}" class="btn btn-primary mt-3">Login</a>
+  <a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary mt-3">Register</a>
+  {% endif %}
+
+</div>
+
+{% endblock %}

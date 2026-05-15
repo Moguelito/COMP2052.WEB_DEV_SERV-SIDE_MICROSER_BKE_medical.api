@@ -1,0 +1,11 @@
+### Editar una cita (PUT)
+
+PUT http://localhost:5000/citas/4 Content-Type: application/json
+
+{
+    "fecha": "2026-06-01 10:00",
+    "motivo": "Consulta de seguimiento",
+    "status": "confirmada",
+    "paciente_id": 3,
+    "medico_id": 2
+}

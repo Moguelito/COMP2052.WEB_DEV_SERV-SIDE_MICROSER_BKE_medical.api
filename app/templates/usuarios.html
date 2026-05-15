@@ -1,0 +1,48 @@
+{% extends "layout.html" %} 
+{% block title %}Lista de Usuarios{% endblock %} 
+{% block content %}
+
+<h3 class="mb-4">Lista de Usuarios Registrados</h3>
+
+<table class="table table-striped table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Rol</th>
+      <th class="text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for usuario in usuarios %}
+    <tr>
+      <td>{{ usuario.username }}</td>
+      <td>{{ usuario.email }}</td>
+      <td>
+        {% if usuario.role.name == 'Admin' %}
+        <span class="badge bg-danger">Admin</span>
+        {% elif usuario.role.name == 'Medico' %}
+        <span class="badge bg-primary">Médico</span>
+        {% elif usuario.role.name == 'Paciente' %}
+        <span class="badge bg-success">Paciente</span>
+        {% endif %}
+      </td>
+      <td class="text-center">
+        {% if current_user.role.name == 'Admin' %}
+          {% if usuario.id != current_user.id %}
+          <form method="POST" action="{{ url_for('main.eliminar_usuario', id=usuario.id) }}" style="display:inline" onsubmit="return confirm('¿Eliminar usuario? Esta acción es irreversible.');">
+            <button type="submit" class="btn btn-sm btn-danger" title="Eliminar usuario">
+              <i class="bi bi-trash"></i>
+            </button>
+          </form>
+          {% else %}
+          <span class="text-muted">—</span>
+          {% endif %}
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

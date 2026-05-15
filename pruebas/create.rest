@@ -1,0 +1,11 @@
+### Crear una nueva cita (POST)
+
+POST http://localhost:5000/citas Content-Type: application/json
+
+{
+    "fecha": "2026-06-01 09:30",
+    "motivo": "Consulta general",
+    "status": "pendiente",
+    "paciente_id": 3,
+    "medico_id": 2
+}

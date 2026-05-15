@@ -1,0 +1,3 @@
+### Obtener todas las citas (GET)
+
+GET http://localhost:5000/citas Content-Type: application/json

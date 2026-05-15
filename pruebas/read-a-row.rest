@@ -1,0 +1,4 @@
+### Obtener cita por ID (GET)
+
+GET http://localhost:5000/citas/1
+Content-Type: application/json

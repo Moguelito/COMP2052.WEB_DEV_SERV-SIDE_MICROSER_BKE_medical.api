@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Sistema de Citas Médicas{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Barra de navegacion -->
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+        <a class="navbar-brand mb-0 h1" href="{{ url_for('main.index') }}">Citas Médicas</a>
+
+  <!-- Links del navbar (siempre visibles) -->
+  <ul class="navbar-nav d-flex flex-row align-items-center mb-0 gap-3">
+
+            {% if current_user.is_authenticated %}
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('main.dashboard') }}">Dashboard</a>
+            </li>
+
+            <!-- Solo Admin ve la lista de usuarios -->
+            {% if current_user.role.name == 'Admin' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('main.listar_usuarios') }}">Usuarios</a>
+            </li>
+            {% endif %}
+
+            <!-- Solo Paciente puede crear citas -->
+            {% if current_user.role.name == 'Paciente' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('main.crear_cita') }}">Nueva Cita</a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('main.cambiar_password') }}">Cambiar Contraseña</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+            </li>
+
+            {% else %}
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+            </li>
+
+            {% endif %}
+
+          </ul>
+      </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container mt-4">
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-info">{{ message }}</div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

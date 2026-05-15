@@ -1,0 +1,86 @@
+{% extends "layout.html" %} 
+{% block title %}Dashboard{% endblock %} 
+{% block content %}
+
+<div class="row">
+  <div class="col">
+    <h3>Gestión de Citas Médicas</h3>
+  </div>
+  <div class="col text-end">
+    {% if current_user.role.name == 'Paciente' %}
+    <a class="btn btn-primary mb-3 me-2" href="{{ url_for('main.crear_cita') }}">
+      <i class="bi bi-plus"></i> Nueva Cita
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>Fecha</th>
+      <th>Motivo</th>
+      <th>Status</th>
+      <th>Paciente</th>
+      <th>Médico</th>
+      <th class="text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cita in citas %}
+    <tr>
+      <td>{{ cita.fecha.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td>{{ cita.motivo }}</td>
+      <td>
+        {% if cita.status == 'pendiente' %}
+        <span class="badge bg-warning text-dark">Pendiente</span>
+        {% elif cita.status == 'completada' %}
+        <span class="badge bg-success">Completada</span>
+        {% elif cita.status == 'cancelada' %}
+        <span class="badge bg-danger">Cancelada</span>
+        {% endif %}
+      </td>
+      <td>{{ cita.paciente.username }}</td>
+      <td>{{ cita.medico.username }}</td>
+      <td class="text-center ps-0 pe-0">
+
+        {% if current_user.role.name == 'Admin' or cita.paciente_id == current_user.id %}
+
+          <a
+            class="btn btn-sm btn-warning me-1"
+            href="{{ url_for('main.editar_cita', id=cita.id) }}"
+            title="Editar cita"
+          >
+            <i class="bi bi-pencil"></i>
+          </a>
+        <form
+          method="POST"
+          action="{{ url_for('main.eliminar_cita', id=cita.id) }}"
+          style="display: inline"
+          onsubmit="return confirm('¿Estás seguro que deseas eliminar esta cita?');"
+        >
+          <button
+            type="submit"
+            class="btn btn-sm btn-danger"
+            title="Eliminar cita"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </form>
+        {% else %}
+        <span class="text-muted"><i class="bi bi-lock"></i></span>
+        {% endif %}
+
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if current_user.role.name == 'Medico' %}
+<p class="text-center pe-3 mt-0 text-body-tertiary fw-lighter fst-italic">
+  No tienes permiso para crear, editar o eliminar citas.
+</p>
+{% endif %}
+
+{% endblock %}
