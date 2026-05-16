@@ -163,20 +163,3 @@ python run.py
 
 Luego abre `http://127.0.0.1:5000/` en el navegador e inicia sesión con los usuarios de ejemplo.
 
-## Próximos pasos sugeridos
-
-- Implementar selección de médico al crear una cita.
-- Añadir paginación y filtros en el listado de citas.
-- Separar la API (JSON) de las vistas HTML para permitir integración con aplicaciones móviles.
-- Añadir tests unitarios (pytest/Flask testing) para las rutas críticas.
-
-## Licencia
-
-Sin licencia especificada en el repositorio. Añade un archivo `LICENSE` si quieres publicar este proyecto con una licencia concreta.
-
----
-
-Si quieres, puedo:
-- Añadir un archivo `.env.example` con las variables necesarias.
-- Cambiar la asignación de `medico_id` para permitir seleccionar médico en el formulario.
-- Añadir pruebas básicas con pytest para las rutas de autenticación.
