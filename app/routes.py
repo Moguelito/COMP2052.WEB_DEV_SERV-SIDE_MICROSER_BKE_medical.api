@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from app.forms import AppointmentForm, ChangePasswordForm
-from app.models import db, Appointment, User
+from app.models import db, Appointment, User, Role
 from datetime import datetime
 
 main = Blueprint('main', __name__)
@@ -41,11 +41,15 @@ def crear_cita():
             flash('Formato de fecha inválido. Usa YYYY-MM-DD HH:MM (p.ej. 2026-06-01 09:30).')
             return render_template('cita_form.html', form=form)
 
+        # Asignar un médico por defecto: buscar el primer usuario con rol 'Medico'
+        medico_user = User.query.join(User.role).filter(Role.name == 'Medico').first()
+        medico_id = medico_user.id if medico_user else 1
+
         cita = Appointment(
             fecha=fecha_dt,
             motivo=form.motivo.data,
             paciente_id=current_user.id,
-            medico_id=1  # esto lo mejoraremos despues
+            medico_id=medico_id
         )
         db.session.add(cita)
         db.session.commit()
